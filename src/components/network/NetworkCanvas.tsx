@@ -1,168 +1,101 @@
 import NetworkNode from "./NetworkNode";
-import Connection from "./Connection";
+import type { NetworkNodeData, PacketData } from "../../simulation/types";
+import SVGConnectionLayer from "./SVGConnectionLayer";
+import { networkNodes } from "../../simulation/flow";
+import { nodePositions } from "../../simulation/layout";
+import type { ConnectionData } from "../../simulation/types";
+import PacketLayer from "./PacketLayer";
 
+interface Props {
+  selectedNode: string | null;
+  onNodeSelect: (node: NetworkNodeData) => void;
+  selectedConnection: string | null;
+  onConnectionSelect: (connection: ConnectionData) => void;
+  packets: PacketData[];
+  selectedPacket: PacketData | null;
+  onPacketSelect: (packet: PacketData | null) => void;
+}
 
-export default function NetworkCanvas(){
+export default function NetworkCanvas({
+  selectedNode,
+  onNodeSelect,
+  selectedConnection,
+  onConnectionSelect,
+  packets,
+  selectedPacket,
+  onPacketSelect
+}: Props) {
+  return (
+    <div className="h-full w-full overflow-auto bg-[#080808]">
+      <div
+        className="relative mx-auto"
+        style={{
+          width: "1200px",
+          height: "1100px",
+        }}
+      >
+            <div className="absolute inset-0 z-0">
+                <SVGConnectionLayer
+                    activeConnection={selectedConnection}
+                    onConnectionSelect={onConnectionSelect}
+                />
+            </div>
 
-return (
 
+            <div className="absolute inset-0 z-10 pointer-events-none">
+                <PacketLayer 
+                    packets={packets} 
+                    selectedPacket={selectedPacket} 
+                    onPacketSelect={onPacketSelect}
+                />
+            </div>
 
-<div
-className="
-h-full
-w-full
-relative
-flex
-items-center
-justify-center
-overflow-hidden
-bg-[#080808]
-"
->
 
-<div
-className="
-absolute
-inset-0
-opacity-20
-"
-style={{
-backgroundImage:
-"linear-gradient(#333 1px, transparent 1px), linear-gradient(90deg,#333 1px,transparent 1px)",
-backgroundSize:"40px 40px"
-}}
-/>
+            <div className="absolute inset-0 z-20 pointer-events-none">
 
+            {
+            networkNodes.map((node)=>{
 
-<div
-className="
-flex
-flex-col
-items-center
-gap-2
-"
->
+            const position =
+            nodePositions[node.id as keyof typeof nodePositions];
 
 
+            return (
 
-<NetworkNode
+            <div
 
-icon="💻"
+            key={node.id}
 
-title="Browser"
+            className="absolute pointer-events-auto"
 
-description="User device requesting a website"
+            style={{
+            left:position.x,
+            top:position.y,
+            transform:"translate(-50%, -50%)"
+            }}
 
-/>
+            >
 
+            <NetworkNode
 
-<Connection/>
+            node={node}
 
+            selected={selectedNode===node.id}
 
+            onSelect={onNodeSelect}
 
+            />
 
-<NetworkNode
+            </div>
 
-icon="🌐"
+            )
 
-title="DNS Server"
+            })
 
-description="Converts domain names into IP addresses"
+            }
 
-/>
-
-
-<Connection/>
-
-
-
-
-<NetworkNode
-
-icon="⚡"
-
-title="CDN"
-
-description="Caches content closer to users"
-
-/>
-
-
-<Connection/>
-
-
-
-
-<NetworkNode
-
-icon="⚖️"
-
-title="Load Balancer"
-
-description="Distributes incoming requests"
-
-/>
-
-
-
-<Connection/>
-
-
-
-<div
-className="
-flex
-gap-8
-"
->
-
-
-<NetworkNode
-
-icon="🖥️"
-
-title="Server 1"
-
-description="Processes requests"
-
-/>
-
-
-<NetworkNode
-
-icon="🖥️"
-
-title="Server 2"
-
-description="Processes requests"
-
-/>
-
-
-</div>
-
-
-
-<Connection/>
-
-
-<NetworkNode
-
-icon="🗄️"
-
-title="Database"
-
-description="Stores application data"
-
-/>
-
-
-
-</div>
-
-
-</div>
-
-)
-
+            </div>
+      </div>
+    </div>
+  );
 }

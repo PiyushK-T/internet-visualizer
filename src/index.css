@@ -2,6 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@keyframes dash {
+  to {
+    stroke-dashoffset:-20;
+  }
+}
 
 body {
   margin:0;
