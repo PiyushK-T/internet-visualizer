@@ -70,6 +70,25 @@ to:"database",
 label:"Database Query",
 protocol:"SQL",
 description:"Application server requests data from database."
-}
+},
+
+{
+id:"browser-cdn",
+from:"browser",
+to:"cdn",
+label:"HTTPS Request",
+protocol:"HTTPS",
+description:"Browser sends an encrypted request directly to the CDN edge server."
+},
+
+
+{
+id:"browser-server1",
+from:"browser",
+to:"server1",
+label:"TCP/TLS Handshake",
+protocol:"TCP",
+description:"Browser establishes a direct connection with the origin server."
+},
 
 ];

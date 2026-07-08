@@ -43,7 +43,7 @@ export default function SimulatorLayout() {
             selectedNode={selectedNode?.id ?? null}
             onNodeSelect={setSelectedNode}
             selectedConnection={selectedConnection?.id ?? null}
-            onConnectionSelect={setSelectedConnection} packets={[]}  
+            onConnectionSelect={setSelectedConnection} packets={packets}  
             selectedPacket={selectedPacket}
             onPacketSelect={setSelectedPacket}
           />

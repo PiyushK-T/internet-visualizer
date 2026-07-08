@@ -65,6 +65,8 @@ latency:number;
 
 connectionId:string;
 
+reverse?:boolean;
+
 }
 
 export interface TimelineStep {

@@ -30,7 +30,8 @@ packet=>packet.status !== "complete"
 const position =
 getPacketPosition(
 packet.connectionId,
-packet.progress
+packet.progress,
+packet.reverse
 );
 
 
@@ -48,6 +49,11 @@ cursor-pointer
 transition-transform
 ${
 selectedPacket?.id===packet.id?"scale-125":""}`}
+style={{
+left: `${position.x}px`,
+top: `${position.y}px`,
+transform: "translate(-50%, -50%)",
+}}
 onClick={()=>{
 
 onPacketSelect(packet);

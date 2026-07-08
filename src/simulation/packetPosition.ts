@@ -3,7 +3,8 @@ import { pathRegistry } from "./pathRegistry";
 
 export function getPacketPosition(
 connectionId:string,
-progress:number
+progress:number,
+reverse?:boolean
 ){
 
 
@@ -26,10 +27,13 @@ const length =
 path.getTotalLength();
 
 
+const effectiveProgress =
+reverse ? (1 - progress) : progress;
+
 
 const point =
 path.getPointAtLength(
-length * progress
+length * effectiveProgress
 );
 
 
