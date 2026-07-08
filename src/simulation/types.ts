@@ -3,8 +3,8 @@ export interface NetworkNodeData {
   title: string;
   icon: string;
   description: string;
-  type: "browser" | "dns" | "cdn" | "loadbalancer" | "server" | "database";
-  
+  type: "browser" | "dns" | "cdn" | "loadbalancer" | "router" | "server" | "database";
+
   /** Metadata for the side-panel Network Inspector */
   details: {
     purpose: string;
@@ -79,4 +79,14 @@ completed:boolean;
 
 active:boolean;
 
+}
+
+export interface SimulationStage {
+  id:string;
+  label:string;
+  description:string;
+  protocol:string;
+  from:string;
+  to:string;
+  reverse?: boolean;
 }

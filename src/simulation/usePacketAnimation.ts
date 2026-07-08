@@ -1,81 +1,31 @@
-import {useEffect} from "react";
-import type {PacketData} from "./types";
-
+// simulation/usePacketAnimation.ts
+import { useEffect } from "react";
+import type { PacketData } from "./types";
 
 export function usePacketAnimation(
-packets:PacketData[],
-setPackets:
-React.Dispatch<
-React.SetStateAction<PacketData[]>
->
-){
+  packets: PacketData[],
+  setPackets: React.Dispatch<React.SetStateAction<PacketData[]>>
+) {
+  useEffect(() => {
+    // If there are no active packets moving, don't run an idle background timer
+    if (packets.length === 0 || packets.every(p => p.status !== "moving")) return;
 
+    const timer = setInterval(() => {
+      setPackets(current =>
+        current.map(packet => {
+          if (packet.status !== "moving") return packet;
 
-useEffect(()=>{
+          const nextProgress = packet.progress + 0.02; // Slightly increased step speed
 
+          if (nextProgress >= 1) {
+            return { ...packet, progress: 1, status: "complete" };
+          }
 
-const timer =
-setInterval(()=>{
+          return { ...packet, progress: nextProgress };
+        })
+      );
+    }, 30);
 
-
-setPackets(current=>
-
-current.map(packet=>{
-
-
-if(packet.status!=="moving")
-return packet;
-
-
-
-let progress =
-packet.progress + 0.01;
-
-
-
-if(progress>=1){
-
-progress=1;
-
-}
-
-
-
-if(progress >= 1){
-
-return {
-
-...packet,
-
-status:"complete"
-
-};
-
-}
-
-
-return {
-
-...packet,
-
-progress
-
-};
-
-})
-
-);
-
-
-
-},30);
-
-
-
-return ()=>clearInterval(timer);
-
-
-},[]);
-
-
+    return () => clearInterval(timer);
+  }, [packets, setPackets]); // <-- Fixed: Triggers a fresh, accurate timer closure whenever state changes
 }

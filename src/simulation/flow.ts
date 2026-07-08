@@ -3,21 +3,21 @@ import type { NetworkNodeData } from "./types";
 export const networkNodes: NetworkNodeData[] = [
   {
     id: "browser",
-    title: "Browser",
+    title: "Client / Browser",
     icon: "💻",
-    description: "User device requesting a website",
+    description: "User device initiating the request",
     type: "browser",
     details: {
-      purpose: "Creates HTTP requests and displays websites",
+      purpose: "Creates HTTP requests and renders the website",
       technology: "Chrome, Firefox, Safari",
       example: "GET https://example.com"
     }
   },
   {
     id: "dns",
-    title: "DNS Server",
+    title: "DNS Resolver",
     icon: "🌐",
-    description: "Converts domains into IP addresses",
+    description: "Translates domain names into IP addresses",
     type: "dns",
     details: {
       purpose: "Finds the server location of a website",
@@ -26,34 +26,46 @@ export const networkNodes: NetworkNodeData[] = [
     }
   },
   {
+    id: "router",
+    title: "Edge Router",
+    icon: "🧭",
+    description: "Routes traffic into the correct service layer",
+    type: "router",
+    details: {
+      purpose: "Directs traffic between the client and the network edge",
+      technology: "Routing Protocols / Firewalling",
+      example: "Forward to CDN or backend"
+    }
+  },
+  {
     id: "cdn",
-    title: "CDN",
+    title: "CDN Edge",
     icon: "⚡",
-    description: "Stores content closer to users",
+    description: "Serves cached content closer to the user",
     type: "cdn",
     details: {
       purpose: "Reduces latency using cached content",
       technology: "CloudFront, Cloudflare",
-      example: "Image served from nearby edge server"
+      example: "Image served from a nearby edge node"
     }
   },
   {
     id: "loadbalancer",
     title: "Load Balancer",
     icon: "⚖️",
-    description: "Distributes incoming traffic across multiple servers",
+    description: "Distributes traffic across application servers",
     type: "loadbalancer",
     details: {
       purpose: "Prevents servers from becoming overloaded",
       technology: "Nginx, AWS ELB, HAProxy",
-      example: "Request routed to Server 2 (Round Robin)"
+      example: "Request routed to Web Server 1"
     }
   },
   {
     id: "server1",
-    title: "Server 1",
+    title: "Web Server",
     icon: "🖥️",
-    description: "Primary application processing node",
+    description: "Handles application and web responses",
     type: "server",
     details: {
       purpose: "Runs core application logic",
@@ -63,9 +75,9 @@ export const networkNodes: NetworkNodeData[] = [
   },
   {
     id: "server2",
-    title: "Server 2",
-    icon: "🖥️",
-    description: "Secondary application processing node",
+    title: "App Server",
+    icon: "🧩",
+    description: "Processes backend application requests",
     type: "server",
     details: {
       purpose: "Handles horizontally scaled system traffic",
@@ -75,12 +87,12 @@ export const networkNodes: NetworkNodeData[] = [
   },
   {
     id: "database",
-    title: "Database",
+    title: "Database Cluster",
     icon: "🗄️",
-    description: "Stores application data",
+    description: "Stores persistent application data",
     type: "database",
     details: {
-      purpose: "Stores persistent records like users and transactions",
+      purpose: "Stores records like users and transactions",
       technology: "PostgreSQL / MongoDB",
       example: "SELECT * FROM users WHERE id = 42;"
     }

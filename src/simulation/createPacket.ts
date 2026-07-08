@@ -15,21 +15,21 @@ export function createPacket(
 stage:SimulationStage
 ):PacketData{
 
-    const forwardMatch = connections.find(
+    const explicitMatch = connections.find(
         c=>c.from===stage.from && c.to===stage.to
     );
 
-    const reverseMatch = connections.find(
+    const fallbackReverseMatch = connections.find(
         c=>c.from===stage.to && c.to===stage.from
     );
 
-    const matchedConnection = forwardMatch ?? reverseMatch;
+    const matchedConnection = explicitMatch ?? (stage.reverse ? fallbackReverseMatch : undefined);
 
     const connectionId = matchedConnection
         ? matchedConnection.id
         : `${stage.from}-${stage.to}`;
 
-    const reverse = !!reverseMatch && !forwardMatch;
+    const reverse = Boolean(stage.reverse);
 
 return {
 

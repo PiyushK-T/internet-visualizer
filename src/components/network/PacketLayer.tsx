@@ -6,13 +6,15 @@ interface Props{
 packets:PacketData[];
 selectedPacket:PacketData|null;
 onPacketSelect:(packet:PacketData|null)=>void;
+pathVersion?: number;
 }
 
 
 export default function PacketLayer({
 packets,
 selectedPacket,
-onPacketSelect
+onPacketSelect,
+pathVersion = 0
 }:Props){
 
 
@@ -36,17 +38,27 @@ packet.reverse
 
 
 
+const colorClass = packet.reverse ? "bg-green-400" : "bg-blue-400";
+const glowClass = packet.reverse ? "shadow-green-400/70" : "shadow-blue-400/70";
+
 return (
 
 <div
 
-key={packet.id}
+key={`${packet.id}-${pathVersion}`}
 
 className={`
 absolute
-text-xl
+h-4
+w-4
+rounded-full
+border
+border-white/70
+shadow-lg
 cursor-pointer
 transition-transform
+${colorClass}
+${glowClass}
 ${
 selectedPacket?.id===packet.id?"scale-125":""}`}
 style={{
@@ -60,9 +72,6 @@ onPacketSelect(packet);
 }}
 
 >
-
-📦
-
 </div>
 
 )
